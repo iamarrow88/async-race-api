@@ -1,7 +1,48 @@
 const jsonServer = require('json-server');
 
 const server = jsonServer.create();
-const router = jsonServer.router("db.json");
+const db = {
+    "garage": [
+        {
+            "name": "Mercedes3",
+            "color": "#6c779f",
+            "id": 3
+        },
+        {
+            "name": "dfdsfsdf10",
+            "color": "#a83e3e",
+            "id": 10
+        },
+        {
+            "name": "fsgfsgfg11",
+            "color": "#c9f005",
+            "id": 11
+        },
+        {
+            "name": "dsfdfsdf12",
+            "color": "#440ed8",
+            "id": 12
+        },
+        {
+            "name": "fdgdfg",
+            "color": "#fbff0a",
+            "id": 13
+        }
+    ],
+    "winners": [
+        {
+            "id": 1,
+            "wins": 1,
+            "time": 10
+        },
+        {
+            "id": 5,
+            "wins": 2,
+            "time": 8.3
+        }
+    ]
+}
+const router = jsonServer.router(db);
 const middlewares = jsonServer.defaults();
 
 const PORT = process.env.PORT || 3000;
@@ -43,7 +84,7 @@ server.patch('/engine', (req, res) => {
         if (state.blocked[id]) {
             return res.status(429).send('Drive already in progress. You can\'t run drive for the same car twice while it\'s not stopped.');
         }
-        
+
         state.blocked[id] = true;
 
         const x = Math.round(distance / velocity);
